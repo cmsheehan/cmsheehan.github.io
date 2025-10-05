@@ -1,4 +1,67 @@
-baseURL: https://example.org/
+baseURL: https://cmsheehan.github.io/
 languageCode: en-us
-title: My New Hugo Site
+title: cmsheehan
 theme: ["PaperMod"]
+
+enableInlineShortcodes: true
+enableRobotsTXT: true
+buildDrafts: false
+buildFuture: false
+buildExpired: false
+enableEmoji: true
+pygmentsUseClasses: true
+
+minify:
+  disableXML: true
+  # minifyOutput: true
+
+pagination:
+  disableAliases: false
+  pagerSize: 5
+
+params:
+  env: production # to enable google analytics, opengraph, twitter-cards and schema.
+  description: "cmsheehan site"
+  author: cmsheehan
+
+  defaultTheme: auto
+  ShowShareButtons: true
+  ShowReadingTime: true
+  displayFullLangName: true
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: true
+  ShowCodeCopyButtons: true
+  ShowRssButtonInSectionTermList: true
+  ShowAllPagesInArchive: true
+  ShowPageNums: true
+  ShowToc: true
+  homeInfoParams:
+    Title: "whoami"
+    Content: >
+      I solve problems and design solutions that drive results.
+
+  socialIcons:
+    - name: github
+      title: My Github
+      url: "https://github.com/cmsheehan"
+    - name: linkedin
+      title: My Linkin
+      url: "https://www.linkedin.com/in/colin-m-sheehan/"
+
+  editPost:
+    URL: "https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite/content"
+    Text: "Suggest Changes" # edit text
+    appendFilePath: true # to append file path to Edit link
+    
+menu:
+  main:
+    - name: Archive
+      url: archives
+      weight: 5
+    - name: Search
+      url: search/
+      weight: 10
+    - name: Tags
+      url: tags/
+      weight: 10
+
