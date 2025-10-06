@@ -1,12 +1,14 @@
 ---
 author: ["cmsheehan"]
-title: "Create a Personal Site with Hugo on Github Pages"
+title: "Create a profile / blog site with Hugo on Github Pages"
 date: "2025-10-05"
-description: "Creating a personal site using Hugo on Github Pages"
+description: ""
 tags: ["hugo", "github"]
 ShowToc: true
 TocOpen: true
 ---
+
+
 
 ```bash
 brew install hugo

@@ -59,7 +59,8 @@ params:
   homeInfoParams:
     Title: "whoami"
     Content: >
-      I solve problems and design solutions that drive results.
+      I'm an engineer who loves solving problems and creating practical solutions.
+      I’m a generalist with broad tech knowledge, always exploring new ways to make things work better. This blog is where I share thoughts, lessons, and ideas from my journey.
 
   socialIcons:
     - name: github
