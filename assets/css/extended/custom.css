@@ -1,0 +1,62 @@
+:root {
+    /* Layout */
+    --gap: 24px;
+    --content-gap: 20px;
+    --nav-width: 1024px;
+    --main-width: 720px;
+    --header-height: 60px;
+    --footer-height: 60px;
+    --radius: 6px;
+    
+    /* Light Theme */
+    --theme: rgb(246, 245, 241);           
+    --entry: rgb(250, 249, 246);           
+    --primary: rgb(60, 60, 58);            
+    --secondary: rgb(117, 116, 112);       
+    --tertiary: rgb(199, 198, 192);        
+    --content: rgb(75, 74, 72);            
+    --code-block-bg: rgb(60, 60, 58);   
+    --code-bg: rgb(243, 242, 238);         
+    --code-text: rgb(55, 54, 52);          
+    --border: rgb(218, 217, 211);
+    --code-border: rgb(210, 209, 203);
+}
+
+.dark {
+    /* Dark Theme */
+    --theme: rgb(38, 37, 36);              
+    --entry: rgb(42, 41, 39);              
+    --primary: rgb(230, 228, 222);         
+    --secondary: rgb(180, 180, 180);
+    --tertiary: rgb(83, 82, 78);           
+    --content: rgb(220, 218, 212);         
+    --code-block-bg: rgb(43, 43, 40);      
+    --code-bg: rgb(60, 59, 56);            
+    --code-text: rgb(225, 223, 217);       
+    --border: rgb(70, 69, 66);
+    --code-border: rgb(78, 77, 73);
+}
+
+/* List Styles */
+.list {
+    background: var(--code-bg);
+}
+
+.dark.list {
+    background: var(--theme);
+}
+
+/* Code Styles */
+pre,
+.code-block {
+    background: var(--code-block-bg);
+    border: 1px solid var(--code-border);
+    border-radius: var(--radius);
+    padding: 6px;
+}
+
+code {
+    background: var(--code-bg);
+    border-radius: 3px;
+    padding: 2px 6px;
+}
