@@ -7,7 +7,6 @@ tags: ["stow", "dotfiles", "how-to"]
 ShowToc: true
 TocOpen: false
 ---
-
 # Managing Dotfiles with GNU Stow
 
 ## The Problem
@@ -47,7 +46,17 @@ git init
 
 **Important:** Keep your dotfiles repo **private**. Config files often contain paths, usernames, and other details that could leak secrets or make you a target.
 
-### 3. Move Your Configs
+### 3. Configure Stow to Ignore Git Files
+
+Create a `.stow-local-ignore` file to prevent Stow from symlinking your `.git` directory:
+
+```bash
+echo ".git" > .stow-local-ignore
+```
+
+Without this, Stow would try to symlink your entire `.git` folder to your home directory, which would break Git operations in both locations.
+
+### 4. Move Your Configs
 
 ```bash
 mv ~/.bashrc ~/.dotfiles/
@@ -55,7 +64,7 @@ mv ~/.zshrc ~/.dotfiles/
 mv ~/.gitconfig ~/.dotfiles/
 ```
 
-### 4. Symlink with Stow
+### 5. Symlink with Stow
 
 ```bash
 stow .
@@ -63,7 +72,7 @@ stow .
 
 Stow creates symlinks from `~` back to `~/.dotfiles`. Your system finds the files where it expects them, but the real files live in your repo.
 
-### 5. Commit and Push
+### 6. Commit and Push
 
 ```bash
 git add .
@@ -105,6 +114,6 @@ Commit the `Brewfile` to your repo. Restore with `brew bundle install`.
 - [Dotfiles Community](https://dotfiles.github.io/)
 - [Atlassian Dotfiles Tutorial](https://www.atlassian.com/git/tutorials/dotfiles)
 - [Managing with GNU Stow and Git](https://dev.to/luxcih/dotfiles-managing-with-gnu-stow-and-git-5100)
-- [Fireship Video](https://www.youtube.com/watch?v=r_MpUP6aKiQ)
+- [Fireship Video](https://www.youtube.com/watch?v=r_MpUP6aKiQ&t=294s)
 
 Configure once. Deploy everywhere.
