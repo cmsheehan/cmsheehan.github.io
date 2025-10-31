@@ -8,8 +8,6 @@ ShowToc: true
 TocOpen: false
 ---
 
-# Creating a Hugo Blog with the PaperMod Theme
-
 If you’re interested in building a static website with [Hugo](https://gohugo.io/), I highly recommend starting with [this excellent guide by Testing with Marie](https://www.testingwithmarie.com/posts/20241126-create-a-static-blog-with-hugo/).
 
 In this post, I’ll share the exact steps and commands I used to create my own Hugo site using the **PaperMod** theme, along with a few simple customizations to make it feel more personal.

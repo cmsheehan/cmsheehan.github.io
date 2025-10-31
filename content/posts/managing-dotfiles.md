@@ -7,7 +7,6 @@ tags: ["stow", "dotfiles", "how-to"]
 ShowToc: true
 TocOpen: false
 ---
-# Managing Dotfiles with GNU Stow
 
 ## The Problem
 
