@@ -59,7 +59,7 @@ params:
   homeInfoParams:
     Title: "whoami"
     Content: >
-      Engineer, Builder, Problem solver. This is my technical notebook.
+      Engineer. Builder. Problem Solver. This is my technical notebook.
 
   socialIcons:
     - name: github
