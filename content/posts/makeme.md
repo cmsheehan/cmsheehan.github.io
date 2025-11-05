@@ -4,7 +4,7 @@ title: "Makeme: A Simple Makefile Template"
 date: "2025-11-04"
 description: ""
 tags: ["Makefile", "platform", "template"]
-ShowToc: true
+ShowToc: false
 TocOpen: false
 ---
 
