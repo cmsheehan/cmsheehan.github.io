@@ -39,6 +39,8 @@ languages:
         - name: Tags
           url: tags/
           weight: 10
+        - name: Bookmarks
+          url: bookmarks
 
 params:
   env: production # to enable google analytics, opengraph, twitter-cards and schema.
@@ -55,7 +57,7 @@ params:
   ShowRssButtonInSectionTermList: true
   ShowAllPagesInArchive: true
   ShowPageNums: true
-  ShowToc: true
+  ShowToc: false
   homeInfoParams:
     Title: "whoami"
     Content: >

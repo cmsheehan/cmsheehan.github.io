@@ -6,6 +6,8 @@ description: ""
 tags: ["Makefile", "platform", "template"]
 ShowToc: false
 TocOpen: false
+cover:
+  image: "https://www.gnu.org/graphics/heckert_gnu.transp.small.png"
 ---
 
 [Makeme](https://github.com/cmsheehan/makeme) is a simple Makefile template for running common project tasks.

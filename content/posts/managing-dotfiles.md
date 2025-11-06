@@ -6,6 +6,8 @@ description: ""
 tags: ["stow", "dotfiles", "how-to"]
 ShowToc: false
 TocOpen: false
+cover:
+  image: "images/dotfiles.png"
 ---
 
 ## The Problem

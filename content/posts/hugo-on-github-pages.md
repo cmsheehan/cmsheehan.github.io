@@ -6,6 +6,8 @@ description: ""
 tags: ["hugo", "github", "how-to"]
 ShowToc: false
 TocOpen: false
+cover:
+   image: "https://gohugo.io/images/hugo-logo-wide.svg"
 ---
 
 If you’re interested in building a static website with [Hugo](https://gohugo.io/), I highly recommend starting with [this excellent guide by Testing with Marie](https://www.testingwithmarie.com/posts/20241126-create-a-static-blog-with-hugo/).
