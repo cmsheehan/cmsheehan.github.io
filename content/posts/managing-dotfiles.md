@@ -4,7 +4,7 @@ title: "Managing Dotfiles with GNU Stow"
 date: "2025-10-29"
 description: ""
 tags: ["stow", "dotfiles", "how-to"]
-ShowToc: true
+ShowToc: false
 TocOpen: false
 ---
 

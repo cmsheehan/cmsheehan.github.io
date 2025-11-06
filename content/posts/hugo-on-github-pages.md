@@ -4,7 +4,7 @@ title: "Creating a Hugo Blog with the PaperMod Theme"
 date: "2025-10-05"
 description: ""
 tags: ["hugo", "github", "how-to"]
-ShowToc: true
+ShowToc: false
 TocOpen: false
 ---
 
