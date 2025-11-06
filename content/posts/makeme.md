@@ -32,7 +32,7 @@ Same interface across all projects.
 
 Tools like [just](https://github.com/casey/just) and [Task](https://taskfile.dev/) have better syntax and more features. Use them if you prefer.
 
-Make's advantage: it's already installed on most systems. No additional setup required.
+Make's advantage: it's already installed on most systems.
 
 ## Setup
 
