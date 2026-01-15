@@ -69,3 +69,33 @@ code {
 img {
     display: unset;
 }
+
+.pi-row {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;        /* desktop: single row */
+}
+
+.pi-row img {
+  width: 260px;
+  height: 400px;
+  object-fit: cover;
+  max-width: none;
+}
+
+/* Mobile / small screens */
+@media (max-width: 900px) {
+  .pi-row {
+    flex-wrap: wrap;        /* allow multiple rows */
+  }
+
+  .pi-row img {
+    width: 260px;
+    height: 400px;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
