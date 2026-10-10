@@ -10,15 +10,13 @@ cover:
   image: "https://www.gnu.org/graphics/heckert_gnu.transp.small.png"
 ---
 
-[Makeme](https://github.com/cmsheehan/makeme) is a simple Makefile template for running common project tasks.
+[Makeme](https://github.com/cmsheehan/makeme) is a small Makefile template I use to run the usual tasks in a project.
 
-## The Problem
+## Why a Makefile?
 
-Different projects use different commands. Instead of remembering specific commands or constantly checking the README, a Makefile provides a consistent interface.
+Every project has its own commands for starting a dev server, running tests, and building. A Makefile puts them behind the same few names, so I don't have to remember them or dig through the README.
 
-## Why Makefiles?
-
-Type `make` in any project to see all available commands:
+With this template, running `make` on its own lists what's available:
 
 ```bash
 $ make
@@ -28,38 +26,28 @@ Available commands:
   make build      Build for production
 ```
 
-Same interface across all projects.
+It works the same way in every project that has the file.
 
-## Why Make Instead of Just or Task?
+## Why not just or Task?
 
-Tools like [just](https://github.com/casey/just) and [Task](https://taskfile.dev/) have better syntax and more features. Use them if you prefer.
+[just](https://github.com/casey/just) and [Task](https://taskfile.dev/) have nicer syntax and more features, and if you already use one, stick with it.
 
-Make's advantage: it's already installed on most systems.
+I use Make because it's already installed on most systems, so there's nothing extra to set up.
 
 ## Setup
 
-Download the Makefile template:
+Download the template into your project:
 
 ```bash
 curl -O https://raw.githubusercontent.com/cmsheehan/makeme/main/Makefile
 ```
 
-Optional: Create an alias for convenience.
+Then edit the commands to match your project.
 
-**Zsh:**
+If you want to do this often, add an alias to your `~/.zshrc` or `~/.bashrc`:
+
 ```bash
-echo 'alias makeme="curl -O https://raw.githubusercontent.com/cmsheehan/makeme/main/Makefile"' >> ~/.zshrc
-source ~/.zshrc
+alias makeme="curl -O https://raw.githubusercontent.com/cmsheehan/makeme/main/Makefile"
 ```
 
-**Bash:**
-```bash
-echo 'alias makeme="curl -O https://raw.githubusercontent.com/cmsheehan/makeme/main/Makefile"' >> ~/.bashrc
-source ~/.bashrc
-```
-
-Then run `makeme` in any project directory and customize as needed.
-
-## Summary
-
-A simple template for consistent task running across projects. Available at [github.com/cmsheehan/makeme](https://github.com/cmsheehan/makeme).
+Restart your shell, and `makeme` will drop the template into whatever directory you're in.
