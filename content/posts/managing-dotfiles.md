@@ -10,17 +10,11 @@ cover:
   image: "images/dotfiles.png"
 ---
 
-## The Problem
+Setting up a dev environment the way you like it takes a long time, and on a new machine you have to do it all again. Keeping your config files in a Git repo fixes that: [GNU Stow](https://www.gnu.org/software/stow/) symlinks them to where your system expects them, so a new machine only needs a clone and one command.
 
-You've spent months perfecting your dev environment. Then you get a new machine and have to do it all over again.
+## What are dotfiles?
 
-## The Solution
-
-Store your config files in a Git repo. Use GNU Stow to symlink them where your system expects them. Clone and restore anywhere in seconds.
-
-## What Are Dotfiles?
-
-Configuration files that start with a period: `.bashrc`, `.zshrc`, `.gitconfig`, `.vimrc`. They control your shell, editor, Git settings, and more.
+Dotfiles are config files whose names start with a period, like `.bashrc`, `.zshrc`, `.gitconfig`, and `.vimrc`. They hold the settings for your shell, editor, Git, and other tools.
 
 ## Setup
 
@@ -37,7 +31,7 @@ sudo apt install stow
 brew install stow
 ```
 
-### 2. Create a Private Repo
+### 2. Create the repo
 
 ```bash
 mkdir ~/.dotfiles
@@ -45,19 +39,19 @@ cd ~/.dotfiles
 git init
 ```
 
-**Important:** Keep your dotfiles repo **private**. Config files often contain paths, usernames, and other details that could leak secrets or make you a target.
+Keep this repo private when you push it. Config files often contain paths and usernames you don't want public. A private repo is still not a safe place for secrets, though, so don't skip step 5.
 
-### 3. Configure Stow to Ignore Git Files
+### 3. Tell Stow to ignore Git files
 
-Create a `.stow-local-ignore` file to prevent Stow from symlinking your `.git` directory:
+Create a `.stow-local-ignore` file so Stow doesn't symlink your `.git` directory or `.gitignore`:
 
 ```bash
-echo ".git" > .stow-local-ignore
+printf '.git\n.gitignore\n' > .stow-local-ignore
 ```
 
-Without this, Stow would try to symlink your entire `.git` folder to your home directory, which would break Git operations in both locations.
+Without this, Stow would try to symlink the whole `.git` folder into your home directory, which breaks Git in both places.
 
-### 4. Move Your Configs
+### 4. Move your configs
 
 ```bash
 mv ~/.bashrc ~/.dotfiles/
@@ -65,15 +59,35 @@ mv ~/.zshrc ~/.dotfiles/
 mv ~/.gitconfig ~/.dotfiles/
 ```
 
-### 5. Symlink with Stow
+### 5. Keep secrets out of the repo
+
+This step is critical. Your dotfiles should never contain secrets such as API keys, tokens, or passwords, even in a private repo. Once a secret is committed it stays in the Git history, and nothing in this setup checks for that. It is up to you to make sure it never happens.
+
+Put every secret in one dedicated file and tell Git to ignore it:
+
+```bash
+touch .secrets
+chmod 600 .secrets
+echo ".secrets" >> .gitignore
+```
+
+Then load it from your shell config (`.zshrc` or `.bashrc`):
+
+```bash
+[ -f ~/.secrets ] && source ~/.secrets
+```
+
+Anything sensitive, like `export GITHUB_TOKEN=...`, goes in `.secrets` and nowhere else. Before you commit, run `git status` and check that `.secrets` is not listed.
+
+### 6. Symlink with Stow
 
 ```bash
 stow .
 ```
 
-Stow creates symlinks from `~` back to `~/.dotfiles`. Your system finds the files where it expects them, but the real files live in your repo.
+Stow creates symlinks in `~` that point back to `~/.dotfiles`. Your tools find the files where they expect them, but the real files live in the repo.
 
-### 6. Commit and Push
+### 7. Commit and push
 
 ```bash
 git add .
@@ -82,7 +96,7 @@ git remote add origin git@github.com:yourusername/dotfiles.git
 git push -u origin main
 ```
 
-## Restore on New Machine
+## Restoring on a new machine
 
 ```bash
 cd ~
@@ -91,24 +105,24 @@ cd ~/.dotfiles
 stow .
 ```
 
-Done.
+The `.secrets` file is not in the repo, so create it again by hand on the new machine.
 
-## Bonus: Track Installed Software
+## Tracking installed software
 
-On macOS with Homebrew:
+On macOS, Homebrew can write a list of everything you have installed:
 
 ```bash
 brew bundle dump --describe
 ```
 
-Commit the `Brewfile` to your repo. Restore with `brew bundle install`.
+Commit the resulting `Brewfile` to the repo, and run `brew bundle install` on the new machine to reinstall it all.
 
 ## Tips
 
-- Use GitHub's no-reply email in `.gitconfig`
-- Don't track files that change constantly (`.zsh_history`)
-- Build an install script as your setup grows
-- Document your process in the README
+- Use GitHub's no-reply email in `.gitconfig`.
+- Don't track files that change constantly, like `.zsh_history`.
+- Write an install script once the setup has more than a few steps.
+- Note the steps in the repo's README so you don't have to work them out again.
 
 ## Resources
 
@@ -116,5 +130,3 @@ Commit the `Brewfile` to your repo. Restore with `brew bundle install`.
 - [Atlassian Dotfiles Tutorial](https://www.atlassian.com/git/tutorials/dotfiles)
 - [Managing with GNU Stow and Git](https://dev.to/luxcih/dotfiles-managing-with-gnu-stow-and-git-5100)
 - [Fireship Video](https://www.youtube.com/watch?v=r_MpUP6aKiQ&t=294s)
-
-Configure once. Deploy everywhere.

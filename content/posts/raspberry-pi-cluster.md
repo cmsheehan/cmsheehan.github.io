@@ -10,26 +10,26 @@ cover:
   image: "images/pi-3.png"
 ---
 
-I've been eager to experiment with Kubernetes in my free time and my initial instinct was to spin up a managed service like Amazon EKS, but the reality check came quickly: at roughly $72 per month just for the control plane, this was overkill for a hobby project.
+I wanted to experiment with Kubernetes in my free time. My first thought was a managed service like Amazon EKS, but at roughly $72 per month for the control plane alone, that was overkill for a hobby project.
 
-That's when I started exploring a more hands-on alternative: running my own Kubernetes cluster on personal hardware. I already had a Raspberry Pi collecting dust in a drawer, so it felt like the perfect opportunity to put it to work.
+So I looked at running my own cluster on hardware I owned. I already had a Raspberry Pi sitting in a drawer, and this was a good reason to put it to work.
 
-## The Inspiration
+## The inspiration
 
-During my research, I discovered an excellent article by Anthony Simon: [Build a Kubernetes Cluster with Raspberry Pi](https://anthonynsimon.com/blog/kubernetes-cluster-raspberry-pi/). What captivated me wasn't just the technical implementation, but the concept of creating a **fully isolated, portable Kubernetes cluster**—something simple, lightweight, portable and contained.
+While researching, I found Anthony Simon's article [Build a Kubernetes Cluster with Raspberry Pi](https://anthonynsimon.com/blog/kubernetes-cluster-raspberry-pi/). What I liked most was the idea of a fully isolated, portable cluster that is small, self-contained, and easy to move around.
 
-If you're interested in this project, I highly recommend reading Anthony's article first. He explains many of the concepts more thoroughly than I will here and I'm mostly documenting my own experience following his instructions.
+If this project interests you, read Anthony's article first. He explains the concepts more thoroughly than I do here. This post is mostly a record of my own experience following his instructions.
 
-## What I Built
+## What I built
 
 ![The Cluster](/images/pi-cluster-1.jpeg)
 
-My goal was to create a three-node Kubernetes cluster that I could:
+I wanted a three-node Kubernetes cluster that I could:
 - Power through a single PoE switch to minimize cable clutter
 - Use on any network via a portable router
-- Host without worrying about cloud costs
+- Run without worrying about cloud costs
 
-## Bill of Materials
+## Bill of materials
 
 | Item | Quantity | Notes |
 |------|----------|-------|
@@ -44,11 +44,11 @@ My goal was to create a three-node Kubernetes cluster that I could:
 | [TP-Link AC750 Portable Travel Router](https://www.amazon.com/dp/B07V2R7W11) | 1 | Creates isolated network |
 | 6-inch CAT6 Ethernet cables | 5 | |
 
-I already owned the 8GB Raspberry Pi 4 from a CanaKit bundle I'd purchased years earlier, which made it the natural choice for the control plane node. The additional 4GB Pi units provide enough resources for most hobby workloads while keeping costs reasonable. While this setup is inspired by Anthony’s cluster build, it isn’t an exact replica. There are differences in the cluster case, SD cards, and PoE HATs.
+I already owned the 8GB Raspberry Pi 4 from a CanaKit bundle I bought years ago, so it became the control plane node. The 4GB Pis have enough resources for most hobby workloads and cost less. My build is based on Anthony's but isn't an exact copy: the cluster case, SD cards, and PoE HATs are different.
 
-## Assembling the Hardware
+## Assembling the hardware
 
-I began by unpacking the Raspberry Pis and preparing each board for assembly. Once unpacked, I attached the heat sinks and installed the PoE HATs.
+I unpacked the Pis, attached the heat sinks, and installed the PoE HATs.
 
 <div class="pi-row">
   <img src="/images/pi-1.png" class="pi-img">
@@ -56,23 +56,23 @@ I began by unpacking the Raspberry Pis and preparing each board for assembly. On
   <img src="/images/pi-3.png" class="pi-img">
 </div>
 
-With the individual Pis fully assembled, I moved on to building the cluster case. Each layer of the case holds a single Pi. After the case was fully assembled, I connected the router and network switch, then powered everything on for the first time.
+Next I built the cluster case, which holds one Pi per layer. Then I connected the router and network switch and powered everything on for the first time.
 
 ![Assembled Cluster](/images/pi-cluster-2.png)
 
-## Flashing the OS Image
+## Flashing the OS image
 
-To set up my Raspberry Pi nodes, I used the **Raspberry Pi Imager** app to flash the latest **Ubuntu Server LTS OS** onto microSD cards via a Uni SD Card Reader.
+I used the **Raspberry Pi Imager** app and a uni SD card reader to flash the latest **Ubuntu Server LTS** onto each microSD card.
 
 ![Image OS](/images/image-builder-1.png)
 
-Following the approach outlined in the reference article, I leveraged `user-data` files to pre-configure each node. This allowed me to:
+As in Anthony's article, I used a `user-data` file to pre-configure each node. It lets you:
 
 * Set a custom hostname for each device.
 * Enable SSH access.
-* Install essential packages automatically.
+* Install packages automatically.
 
-Here’s an example of the `user-data` configuration I used:
+Here's an example of the `user-data` configuration I used:
 
 ```yaml
 #cloud-config
@@ -104,17 +104,17 @@ runcmd:
   - [ sh, -c, "for f in /var/lib/systemd/rfkill/*:wlan; do echo 0 > \"$f\"; done" ]
 ```
 
-After flashing the OS image, I safely ejected the storage device. I then remounted it to update the `user-data` file, which on macOS is located at:
+After flashing, I ejected the card, then remounted it to update the `user-data` file. On macOS it's at:
 
 ```
 /Volumes/system-boot/user-data
 ```
 
-I repeated this process for all three nodes.
+I repeated this for all three nodes.
 
-## Configuring the Router
+## Configuring the router
 
-The referenced article provides great documentation on this part and why it is configured the way it is. I will provide additional detailed instructions on configuring this version of the router on Mac.
+Anthony's article documents this part well, including why it's configured the way it is. Here are the detailed steps for this particular router on a Mac.
 
 * **Initial Setup**
 
@@ -153,12 +153,12 @@ The referenced article provides great documentation on this part and why it is c
   * Go to **Network → LAN** to configure the IP range
   * Avoid subnet conflicts:
 
-    * The referenced blog used `10.42.0.0/16`, which caused connection issues when running k3s. After some debugging, I was finally able to enable with the referenced `10.42.0.0/16` CIDR by providing the following parameters in the setup command.
+    * The referenced blog used `10.42.0.0/16`, which caused connection issues for me when running k3s. After some debugging, I got it working on that range by passing these flags to the k3s setup command:
 
       ```bash
       --cluster-cidr 10.52.0.0/16 --service-cidr 10.53.0.0/16
       ```
-    * I chose to reconfigure the VLAN subnet `10.100.0.0/16` to avoid any potential conflicts
+    * In the end I changed the router's subnet to `10.100.0.0/16` to avoid any conflicts.
 
     ![router-2.png](/images/router-2.png)
 
