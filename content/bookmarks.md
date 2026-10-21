@@ -20,3 +20,21 @@ A collection of useful links, documents, and notes organized by topic.
 - [google standards](https://cloud.google.com/docs/terraform/best-practices/general-style-structure)
 - [template module](https://github.com/TerraformInDepth/terraform-module-cookiecutter)
 
+## AI Research
+
+- [arxiv](https://arxiv.org/)
+- [bair blog](https://bair.berkeley.edu/blog/)
+
+## Blogs
+
+- [simon willison](https://simonwillison.net/)
+- [fsck.com](https://blog.fsck.com/)
+- [julien.org](https://www.julien.org/)
+
+## Essays
+
+- [dario amodei](https://darioamodei.com/)
+
+## Cloud Native
+
+- [cncf landscape](https://landscape.cncf.io/)

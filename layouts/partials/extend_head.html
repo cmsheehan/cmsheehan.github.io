@@ -1,0 +1,53 @@
+{{- /* Load Mermaid only on pages that have a mermaid code block. The footer is partialCached, so it can't do this. */ -}}
+{{- if and .IsPage (strings.Contains .RawContent "```mermaid") }}
+<script type="module">
+  import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.17.2/dist/mermaid.esm.min.mjs";
+
+  const diagrams = [...document.querySelectorAll("pre.mermaid")];
+  diagrams.forEach((el) => (el.dataset.source = el.textContent));
+
+  // PaperMod toggles dark mode with a class on <body>, so re-render when it changes.
+  const render = async () => {
+    const theme = document.body.classList.contains("dark") ? "dark" : "default";
+    mermaid.initialize({
+      startOnLoad: false,
+      theme,
+      securityLevel: "strict",
+      themeVariables: { fontSize: "18px" },
+      flowchart: { nodeSpacing: 40, rankSpacing: 50 },
+    });
+    diagrams.forEach((el) => {
+      el.removeAttribute("data-processed");
+      el.textContent = el.dataset.source;
+    });
+    await mermaid.run({ nodes: diagrams });
+  };
+
+  // Click a diagram to open it full screen, where it can be scrolled and pinch-zoomed.
+  const dialog = document.createElement("dialog");
+  dialog.id = "mermaid-zoom";
+  dialog.setAttribute("aria-label", "Enlarged diagram");
+  dialog.innerHTML = '<button type="button" class="mermaid-zoom-close" aria-label="Close">&times;</button><div class="mermaid-zoom-body"></div>';
+  document.body.append(dialog);
+  const body = dialog.querySelector(".mermaid-zoom-body");
+  diagrams.forEach((el) => {
+    el.title = "Click to enlarge";
+    el.addEventListener("click", () => {
+      const svg = el.querySelector("svg");
+      if (!svg) return;
+      const copy = svg.cloneNode(true);
+      const width = svg.viewBox.baseVal.width || svg.getBoundingClientRect().width;
+      copy.removeAttribute("style");
+      copy.style.width = `max(${Math.round(width * 1.5)}px, 100%)`;
+      copy.style.height = "auto";
+      body.replaceChildren(copy);
+      dialog.showModal();
+    });
+  });
+  dialog.querySelector(".mermaid-zoom-close").addEventListener("click", () => dialog.close());
+  dialog.addEventListener("click", (e) => e.target === dialog && dialog.close());
+
+  render();
+  new MutationObserver(render).observe(document.body, { attributes: true, attributeFilter: ["class"] });
+</script>
+{{- end }}
